@@ -63,3 +63,9 @@ You can pause runs for manual approval before executing sensitive tools. This is
 See [`human_in_the_loop.py`](./human_in_the_loop.py) for the base approval flow and [`human_in_the_loop_custom_rejection.py`](./human_in_the_loop_custom_rejection.py) for run-level tool error formatting when approvals are rejected.
 
 See [`human_in_the_loop_server.py`](./human_in_the_loop_server.py) for a server-owned snapshot with owner-checked, single-use approval submissions. Its CLI simulates an authenticated client; HTTP authentication and shared production storage are application responsibilities. Never deserialize an unverified client-supplied `RunState` to collect approvals.
+
+## Defense in depth
+
+You can combine the layers above into one secure agent: an input guardrail rejects prompt-injection attempts, a tool allowlist rejects calls to tools outside the approved set, and sensitive tools still pause for human approval before they run. Each layer is independent, so a failure in one layer does not remove the others.
+
+See [`defense_in_depth.py`](./defense_in_depth.py) for an example of this.
